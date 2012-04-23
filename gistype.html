@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<header>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="keycode.js"></script>
+	<script src="gistype.js"></script>
+	<link rel="stylesheet" type="text/css" href="gistype.css"></style>
+</header>
+<body>
+	<div id="display"> </div>
+	<script>
+		$(function() {
+			Gistype.gist(window.location.hash.split('#')[1] || 1, function(gist) {
+				display = new Gistype.Display('#display');
+			
+				Gistype.typed(document, function(key){
+					console.log(key)
+					display.match(key);
+				});
+
+				var files = gist.data.files;
+				for ( fn in files )
+					display.setText(files[fn].content);
+			});
+		});
+	</script>
+</body>
+</html>

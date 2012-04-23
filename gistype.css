@@ -1,0 +1,34 @@
+html, body {
+	height: 100%;
+}
+
+body {
+	padding: 10px 25px;
+	overflow: hidden;
+}
+
+#display {
+	margin: auto;
+	white-space: pre;
+	font-family: "Lucida Console", Consolas, "Courier New", Courier, monospace;
+	padding: 15px 25px;
+	margin: 25px auto;
+	box-shadow: 1px 1px 10px #aaa;
+	min-height: 90%;
+}
+
+#display span {
+	margin: 0;
+	padding: 0;
+	color: silver;
+}
+
+#display .cursor {
+	color: black;
+	background-color: #dedede;
+	font-weight: bold;
+}
+
+#display .error {
+	color: red;
+}
