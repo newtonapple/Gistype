@@ -90,34 +90,10 @@ var modifiers = ['ctrl', 'alt', 'shift'],
         123: 91,    // { -> [
         125: 93     // } -> ]
     };
-    // shifted_symbols = {
-    //     58: 59,     // : -> ;
-    //     43: 61,     // = -> +
-    //     60: 44,     // < -> ,
-    //     95: 45,     // _ -> -
-    //     62: 46,     // > -> .
-    //     63: 47,     // ? -> /
-    //     96: 192,    // ` -> ~
-    //     124: 92,    // | -> \
-    //     39: 222,    // ' -> 222
-    //     34: 222,    // " -> 222
-    //     33: 49,     // ! -> 1
-    //     64: 50,     // @ -> 2
-    //     35: 51,     // # -> 3
-    //     36: 52,     // $ -> 4
-    //     37: 53,     // % -> 5
-    //     94: 54,     // ^ -> 6
-    //     38: 55,     // & -> 7
-    //     42: 56,     // * -> 8
-    //     40: 57,     // ( -> 9
-    //     41: 58,     // ) -> 0
-    //     123: 91,    // { -> [
-    //     125: 93     // } -> ]
-    // };
 
-	var shift_symbols = {};
-	for (key in shifted_symbols)
-		shift_symbols[shifted_symbols[key]] = parseInt(key);
+    var shift_symbols = {};
+    for (key in shifted_symbols)
+        shift_symbols[shifted_symbols[key]] = parseInt(key);
 
 function isLower(ascii) { 
     return ascii >= 97 && ascii <= 122; 
@@ -148,20 +124,6 @@ var GECKO_IE_KEYMAP = {
     221: 93 // }]
 };
 
-// var GECKO_IE_KEYMAP = {
-//     186: 59, // ;: in IE
-//     187: 61, // =+ in IE
-//     188: 44, // ,<
-//     109: 95, // -_ in Mozilla
-//     107: 61, // =+ in Mozilla
-//     189: 95, // -_ in IE
-//     190: 62, // .>
-//     191: 47, // /?
-//     192: 126, // `~
-//     219: 91, // {[
-//     220: 92, // \|
-//     221: 93 // }]
-// };
 
 var OPERA_KEYMAP = {};
 
@@ -253,7 +215,7 @@ if(typeof window.KeyCode != "undefined") {
 }
 
 var KeyCode = window.KeyCode = {
-	km: shift_symbols,
+    km: shift_symbols,
     no_conflict: function() {
         window.KeyCode = _KeyCode;
         return KeyCode;
@@ -289,32 +251,32 @@ var KeyCode = window.KeyCode = {
         if(isLower(c)) return c - 32;
         return shifted_symbols[c] || c;
     },
-	// 
-	ascii_char: function(code, shift) {
-		// A-Z, [ \ ] ^ _ and space & tab
-		if (code >= 65 && code <= 90 || code === 32 || code === 9)
-			return shift ? String.fromCharCode(code) : String.fromCharCode(code).toLowerCase();
+    // 
+    ascii_char: function(code, shift) {
+        // A-Z, [ \ ] ^ _ and space & tab
+        if (code >= 65 && code <= 90 || code === 32 || code === 9)
+            return shift ? String.fromCharCode(code) : String.fromCharCode(code).toLowerCase();
 
-		// Symbols without special cases
-		if (shift) {
-			var ascii_code = shift_symbols[code];
-			if (ascii_code)
-				return String.fromCharCode(ascii_code);
-		}
-		
-		// symbols ascii code that maps directly to normalized keycode: - . / 0 1 2 3 4 5 6 7 8 9 : ; < =
-		// note ":" & "<" keys are shifted keys, so they should already be handled.
-		if ((code >= 44 && code <= 61) || (code >= 91 && code <= 95))
-			return String.fromCharCode(code);
-			
-		// special cases
-		if (code === 13) return "\n";
-		if (code >= 96 && code <= 105) return (code - 96) + '';
-		if (code === 126) return shift ? '~' : '`';
-		if (code === 222) return shift ? '"' : "'";
-		if (code === 106) return '*';
-		return null;
-	},
+        // Symbols without special cases
+        if (shift) {
+            var ascii_code = shift_symbols[code];
+            if (ascii_code)
+                return String.fromCharCode(ascii_code);
+        }
+        
+        // symbols ascii code that maps directly to normalized keycode: - . / 0 1 2 3 4 5 6 7 8 9 : ; < =
+        // note ":" & "<" keys are shifted keys, so they should already be handled.
+        if ((code >= 44 && code <= 61) || (code >= 91 && code <= 95))
+            return String.fromCharCode(code);
+            
+        // special cases
+        if (code === 13) return "\n";
+        if (code >= 96 && code <= 105) return (code - 96) + '';
+        if (code === 126) return shift ? '~' : '`';
+        if (code === 222) return shift ? '"' : "'";
+        if (code === 106) return '*';
+        return null;
+    },
 
     /** Checks if two key objects are equal. */
     key_equals: function(key1, key2) {
@@ -333,9 +295,9 @@ var KeyCode = window.KeyCode = {
     translate_event: function(e) {
         e = e || window.event;
         var code = e.which || e.keyCode,
-			normalized_code = KeyCode.translate_key_code(code);
+            normalized_code = KeyCode.translate_key_code(code);
         return {
-			char: KeyCode.ascii_char(normalized_code, e.shiftKey),
+            char: KeyCode.ascii_char(normalized_code, e.shiftKey),
             code: normalized_code,
             shift: e.shiftKey,
             alt: e.altKey,
