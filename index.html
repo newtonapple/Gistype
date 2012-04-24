@@ -13,8 +13,8 @@
     <script>
         $(function() {
             Gistype.gist(window.location.hash.split('#')[1] || 1, function(gist) {
-                 display = new Gistype.Display('#display'),
-                      stats = $('#stats');
+                 var display = new Gistype.Display('#display'),
+                       stats = $('#stats');
                 var files = gist.data.files;
                 for ( fn in files )
                     display.setText(files[fn].content);
