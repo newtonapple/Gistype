@@ -1,4 +1,4 @@
-html, body {
+xhtml, body {
     height: 100%;
 }
 
@@ -7,12 +7,32 @@ body {
     overflow: hidden;
 }
 
+#stats {
+    color: #555;
+    text-shadow: 1px 1px 1px #aaa;
+}
+
+#stats span { 
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid #555;
+    border-left: 1px solid #ddd;
+}
+
+#stats span:first-child {
+    border-left: none;
+}
+
+#stats span:last-child {
+    border-right: none;
+}
+
 #display {
     margin: auto;
     white-space: pre;
     font-family: "Lucida Console", Consolas, "Courier New", Courier, monospace;
-    padding: 15px 25px;
-    margin: 25px auto;
+    padding: 10px 25px;
+    margin: 10px auto;
     box-shadow: 1px 1px 10px #aaa;
     min-height: 90%;
 }

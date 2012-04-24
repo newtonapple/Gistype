@@ -8,18 +8,26 @@
     <title>Gistype - just type some gists.</title>
 </header>
 <body>
+    <span id="stats"> </span>
     <div id="display"> </div>
     <script>
         $(function() {
             Gistype.gist(window.location.hash.split('#')[1] || 1, function(gist) {
-                var display = new Gistype.Display('#display');
-                Gistype.typed(document, function(key){
-                    display.match(key);
-                });
-
+                 display = new Gistype.Display('#display'),
+                      stats = $('#stats');
                 var files = gist.data.files;
                 for ( fn in files )
                     display.setText(files[fn].content);
+
+                Gistype.typed(document, function(key){
+                    display.match(key);
+                    stats.html([
+                        '<span class="wpm"> WPM: ', parseInt(display.wpm()), ' </span>',
+                        '<span class="cpm"> CPM: ', parseInt(display.cpm()), ' </span>',
+                        '<span class="error-rate"> ERROR RATE: ', parseInt(display.errorRate() * 100), '%</span>'
+                    ].join(''));
+                });
+
             });
         });
     </script>
