@@ -27,7 +27,11 @@ var Gistype = (function($) {
         
         gt.Display.prototype = {
             setText: function(text) {
-                this.text = text;
+                if (text) {
+                    this.text = $.map(text.replace("\t", "  ").split("\n"), function(line, i) {  // replace tabs with 2 spaces
+                        return line.replace(/\s+$/, ''); // strip trailing spaces.
+                    }).join('\n').replace(/\s+$/, '');  // strip trailing spaces
+                }
                 this.reset();
             },
 
